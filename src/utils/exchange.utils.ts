@@ -1,8 +1,9 @@
 import axios from 'axios';
 
-export const getUsdExchangeRate = async (): Promise<number> => {
-  const { data } = await axios.get(process.env.USD_EXCHANGE_RATE_ENDPOINT);
-  const usdExchangeRate = data.ethereum.usd;
+export class ExchangeUtils {
+  static async getUsdExchangeRate(): Promise<number> {
+    const { data } = await axios.get(process.env.USD_EXCHANGE_RATE_ENDPOINT);
 
-  return usdExchangeRate;
-};
+    return data.ethereum.usd;
+  }
+}

@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { ResponseBody, SortedAddress } from './addresses.model';
 import { GetAddressesBalanceDto } from './dto/getAddressBalance.dto';
-import { getUsdExchangeRate } from 'src/utils/exchange.utils';
-import { Web3Utils } from 'src/utils/web3.utils';
+import { ExchangeUtils } from '../utils/exchange.utils';
+import { Web3Utils } from '../utils/web3.utils';
 
 @Injectable()
 export class AddressesService {
@@ -22,7 +22,7 @@ export class AddressesService {
         : wrongAddresses.push(address);
     });
 
-    const usdExchangeRate: number = await getUsdExchangeRate();
+    const usdExchangeRate: number = await ExchangeUtils.getUsdExchangeRate();
 
     for (const address of validAddresses) {
       const balance = Number(

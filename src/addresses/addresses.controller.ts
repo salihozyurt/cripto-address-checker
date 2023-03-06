@@ -1,4 +1,10 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { AddressesService } from './addresses.service';
 import { ResponseBody } from './addresses.model';
 import { GetAddressesBalanceDto } from './dto/getAddressBalance.dto';
@@ -8,6 +14,7 @@ export class AddressesController {
   constructor(private addressesService: AddressesService) {}
 
   @Post('balance')
+  @UsePipes(ValidationPipe)
   async getAddressesBalance(
     @Body() getAddressesBalanceDto: GetAddressesBalanceDto,
   ): Promise<ResponseBody> {
