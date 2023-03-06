@@ -8,3 +8,8 @@ export interface SortedAddress {
   eth_balance: number;
   usd_balance: number;
 }
+
+export interface OneAddressResponseBody {
+  valid: boolean;
+  address_information?: SortedAddress;
+}

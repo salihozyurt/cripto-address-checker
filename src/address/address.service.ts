@@ -1,11 +1,44 @@
 import { Injectable } from '@nestjs/common';
-import { ResponseBody, SortedAddress } from './address.model';
+import {
+  OneAddressResponseBody,
+  ResponseBody,
+  SortedAddress,
+} from './address.model';
 import { GetAddressesBalanceDto } from './dto/getAddressBalance.dto';
 import { ExchangeUtils } from '../utils/exchange.utils';
 import { Web3Utils } from '../utils/web3.utils';
+import { GetAddressBalanceDto } from './dto/getAddressBalance.fto';
 
 @Injectable()
 export class AddressService {
+  async getAddressBalance(
+    getAddressBalanceDto: GetAddressBalanceDto,
+  ): Promise<OneAddressResponseBody> {
+    const { address } = getAddressBalanceDto;
+
+    const web3 = Web3Utils.getWeb3();
+
+    const valid = web3.utils.isAddress(address);
+
+    if (!valid) {
+      return { valid };
+    }
+
+    const balance = Number(
+      web3.utils.fromWei(await web3.eth.getBalance(address)),
+    );
+
+    const usdExchangeRate: number = await ExchangeUtils.getUsdExchangeRate();
+
+    const sortedAddress: SortedAddress = {
+      address,
+      eth_balance: balance,
+      usd_balance: balance * usdExchangeRate,
+    };
+
+    return { valid, address_information: sortedAddress };
+  }
+
   async getAddressesBalance(
     getAddressesBalanceDto: GetAddressesBalanceDto,
   ): Promise<ResponseBody> {
