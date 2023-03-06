@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { ResponseBody, SortedAddress } from './addresses.model';
+import { ResponseBody, SortedAddress } from './address.model';
 import { GetAddressesBalanceDto } from './dto/getAddressBalance.dto';
 import { ExchangeUtils } from '../utils/exchange.utils';
 import { Web3Utils } from '../utils/web3.utils';
 
 @Injectable()
-export class AddressesService {
+export class AddressService {
   async getAddressesBalance(
     getAddressesBalanceDto: GetAddressesBalanceDto,
   ): Promise<ResponseBody> {

@@ -5,20 +5,20 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { AddressesService } from './addresses.service';
-import { ResponseBody } from './addresses.model';
+import { AddressService } from './address.service';
+import { ResponseBody } from './address.model';
 import { GetAddressesBalanceDto } from './dto/getAddressBalance.dto';
 
-@Controller('addresses')
-export class AddressesController {
-  constructor(private addressesService: AddressesService) {}
+@Controller('address')
+export class AddressController {
+  constructor(private addressService: AddressService) {}
 
   @Post('balance')
   @UsePipes(ValidationPipe)
   async getAddressesBalance(
     @Body() getAddressesBalanceDto: GetAddressesBalanceDto,
   ): Promise<ResponseBody> {
-    return await this.addressesService.getAddressesBalance(
+    return await this.addressService.getAddressesBalance(
       getAddressesBalanceDto,
     );
   }

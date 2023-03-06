@@ -19,7 +19,7 @@ describe('AppController (e2e)', () => {
 
   it('/ getAddressesBalance should return 201 when payload is not empty', () => {
     return request(app.getHttpServer())
-      .post('/addresses/balance')
+      .post('/address/balance')
       .send({
         addresses: [
           '0xq1912fee45d61c87cc5ea59dae31190fffff23a2',
@@ -31,7 +31,7 @@ describe('AppController (e2e)', () => {
 
   it('/ getAddressesBalance should not get error when addresses array is empty', () => {
     return request(app.getHttpServer())
-      .post('/addresses/balance')
+      .post('/address/balance')
       .send({
         addresses: [],
       })
@@ -40,7 +40,7 @@ describe('AppController (e2e)', () => {
 
   it('/ getAddressesBalance should return bad request when addresses array is no defined', () => {
     return request(app.getHttpServer())
-      .post('/addresses/balance')
+      .post('/address/balance')
       .send({
         addressess: [],
       })
