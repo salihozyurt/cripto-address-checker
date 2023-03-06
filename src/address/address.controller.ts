@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Logger,
   Post,
   UsePipes,
   ValidationPipe,
@@ -20,6 +21,8 @@ import {
 @ApiTags('Address')
 @Controller('address')
 export class AddressController {
+  private logger = new Logger('AddressController');
+
   constructor(private addressService: AddressService) {}
 
   @Get('one/balance')
@@ -29,6 +32,10 @@ export class AddressController {
   async getAddressBalance(
     @Body() getAddressBalanceDto: GetAddressBalanceDto,
   ): Promise<OneAddressResponseBody> {
+    this.logger.verbose(
+      `User getting balance for the address: ${getAddressBalanceDto.address}`,
+    );
+
     return await this.addressService.getAddressBalance(getAddressBalanceDto);
   }
 
@@ -39,6 +46,10 @@ export class AddressController {
   async getAddressesBalance(
     @Body() getAddressesBalanceDto: GetAddressesBalanceDto,
   ): Promise<ResponseBody> {
+    this.logger.verbose(
+      `User getting balance for the address: ${getAddressesBalanceDto.addresses}`,
+    );
+
     return await this.addressService.getAddressesBalance(
       getAddressesBalanceDto,
     );
